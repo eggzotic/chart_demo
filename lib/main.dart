@@ -34,18 +34,27 @@ class HomePage extends StatelessWidget {
     required List<String> xAxisData,
     required List<String> legends,
   }) {
-    LabelLayoutStrategy? xContainerLabelLayoutStrategy;
+    // LabelLayoutStrategy? xContainerLabelLayoutStrategy;
     ChartData chartData;
-    ChartOptions chartOptions = const ChartOptions();
+    ChartOptions chartOptions = const ChartOptions(
+      lineChartOptions: LineChartOptions(
+        hotspotInnerRadius: 1,
+        hotspotOuterRadius: 1,
+        hotspotInnerPaintColor: Colors.black,
+        hotspotOuterPaintColor: Colors.black,
+        lineStrokeWidth: 2,
+      ),
+    );
     chartData = ChartData(
       dataRows: dataRows,
       xUserLabels: xAxisData,
       dataRowsLegends: legends,
       chartOptions: chartOptions,
+      dataRowsColors: const [Colors.blue, Colors.purple],
     );
     var lineChartContainer = LineChartTopContainer(
       chartData: chartData,
-      xContainerLabelLayoutStrategy: xContainerLabelLayoutStrategy,
+      // xContainerLabelLayoutStrategy: xContainerLabelLayoutStrategy,
     );
 
     var lineChart = LineChart(
