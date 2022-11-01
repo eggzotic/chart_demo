@@ -66,6 +66,14 @@ class HomePage extends StatelessWidget {
         actions: [
           if (appState.ready)
             TextButton(
+              onPressed: () => appState.pauseResume(),
+              child: Text(
+                appState.paused ? 'Resume' : "Pause",
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          if (appState.ready)
+            TextButton(
               onPressed: () => appState.stop(),
               child: const Text(
                 'Stop',
@@ -84,8 +92,8 @@ class HomePage extends StatelessWidget {
           : appState.ready
               ? Center(
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 2,
-                    height: MediaQuery.of(context).size.height / 2,
+                    width: MediaQuery.of(context).size.width * .8,
+                    height: MediaQuery.of(context).size.height * .8,
                     child: chartToRun(
                       dataRows: appState.dataRows,
                       xAxisData: appState.xAxisData,

@@ -5,9 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class MyState with ChangeNotifier {
-  MyState({required this.slots}) {
-    // _start();
-  }
+  MyState({required this.slots});
+  //
   final int slots;
   //
   bool _ready = false;
@@ -19,14 +18,23 @@ class MyState with ChangeNotifier {
   final seriesA = Queue<double>();
   final seriesB = Queue<double>();
   //
+  void _init() {
+    times.clear();
+    seriesA.clear();
+    seriesB.clear();
+  }
+
+  //
   late Timer _timer;
   void start() {
+    _init();
     _started = true;
     notifyListeners();
     final random = Random();
     _timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
+        if (_paused) return;
         times.add(DateTime.now());
         seriesA.add(random.nextDouble() * 100);
         seriesB.add(random.nextDouble() * 100);
@@ -48,6 +56,16 @@ class MyState with ChangeNotifier {
   void stop() {
     _timer.cancel();
     _started = false;
+    _ready = false;
+    _paused = false;
+    notifyListeners();
+  }
+
+  bool _paused = false;
+  bool get paused => _paused;
+
+  void pauseResume() {
+    _paused = !_paused;
     notifyListeners();
   }
 
